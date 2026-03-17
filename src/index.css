@@ -1,24 +1,31 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
 @theme {
-  --font-headline: "Manrope", sans-serif;
+  --font-headline: "Poppins", sans-serif;
   --font-body: "Inter", sans-serif;
   
-  --color-surface: #0b1326;
-  --color-surface-container: #171f33;
-  --color-surface-container-low: #131b2e;
-  --color-surface-container-high: #222a3d;
-  --color-surface-container-highest: #2d3449;
-  --color-on-surface: #dae2fd;
-  --color-on-surface-variant: #c2c6d6;
-  --color-primary: #adc6ff;
-  --color-primary-container: #4d8eff;
-  --color-on-primary: #002e6a;
-  --color-secondary: #4edea3;
-  --color-tertiary: #ffb3ad;
-  --color-tertiary-container: #ff5451;
-  --color-outline-variant: #424754;
+  --color-surface: #0f172a;
+  --color-surface-container: #1e293b;
+  --color-surface-container-low: #1e293b; /* Refined Slate 800 */
+  --color-surface-container-high: #334155;
+  --color-surface-container-highest: #475569;
+  
+  --color-on-surface: #f8fafc;
+  --color-on-surface-variant: #94a3b8;
+  
+  --color-primary: #6366f1; /* Indigo 500 */
+  --color-primary-container: #4f46e5;
+  --color-on-primary: #ffffff;
+  
+  --color-secondary: #22c55e; /* Green 500 */
+  --color-tertiary: #f43f5e; /* Rose 500 */
+  --color-tertiary-container: #e11d48;
+  
+  --color-accent-blue: #0ea5e9;
+  --color-accent-purple: #a855f7;
+  
+  --color-outline-variant: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
