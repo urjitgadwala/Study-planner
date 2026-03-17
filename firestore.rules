@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: /users/{userId}/subjects
+    // Document ID: auto-generated or subject.id
+    // Fields: id, title, color, estimatedTimeRemaining, sections (array of objects)
+    //
+    // Collection: /users/{userId}/tasks
+    // Document ID: auto-generated or task.id
+    // Fields: id, title, subtitle, time, completed, active
+    //
+    // Collection: /users/{userId}/habits
+    // Document ID: auto-generated or habit.id
+    // Fields: id, title, description, frequency, completedDays (array of strings), xp, category
+    //
+    // Collection: /users/{userId}/events
+    // Document ID: auto-generated or event.id
+    // Fields: id, title, subject, type, date, time, description, reminders, isRecurring, recurrence, topic, duration, completed
+    //
+    // Collection: /users/{userId}/data/stats
+    // Document ID: stats
+    // Fields: xp, level
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "sravasthigoli07@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+
+      match /subjects/{subjectId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+
+      match /tasks/{taskId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+
+      match /habits/{habitId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+
+      match /events/{eventId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+
+      match /data/{docId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+  }
+}

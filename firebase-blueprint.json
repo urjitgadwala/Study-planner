@@ -1,0 +1,157 @@
+{
+  "entities": {
+    "Subject": {
+      "title": "Subject",
+      "description": "A study subject with sections and topics",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "color": { "type": "string" },
+        "estimatedTimeRemaining": { "type": "number" },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" },
+              "topics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "title": { "type": "string" },
+                    "completed": { "type": "boolean" },
+                    "notes": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["id", "title", "color", "sections"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A to-do task",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "time": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["id", "title", "completed"]
+    },
+    "Habit": {
+      "title": "Habit",
+      "description": "A daily or weekly habit",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "frequency": { "type": "string", "enum": ["daily", "weekly"] },
+        "completedDays": { "type": "array", "items": { "type": "string" } },
+        "xp": { "type": "number" },
+        "category": { "type": "string", "enum": ["coding", "math", "theory", "general"] }
+      },
+      "required": ["id", "title", "frequency", "completedDays", "xp", "category"]
+    },
+    "CalendarEvent": {
+      "title": "CalendarEvent",
+      "description": "An event on the study calendar",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "type": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "description": { "type": "string" },
+        "reminders": { "type": "array", "items": { "type": "string" } },
+        "isRecurring": { "type": "boolean" },
+        "recurrence": { "type": "string", "enum": ["daily", "weekly"] },
+        "topic": { "type": "string" },
+        "duration": { "type": "string" },
+        "completed": { "type": "boolean" }
+      },
+      "required": ["id", "title", "type", "date", "time"]
+    },
+    "UserData": {
+      "title": "UserData",
+      "description": "User specific data like XP and level",
+      "type": "object",
+      "properties": {
+        "xp": { "type": "number" },
+        "level": { "type": "number" }
+      },
+      "required": ["xp", "level"]
+    },
+    "Badge": {
+      "title": "Badge",
+      "description": "An achievement badge",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "unlocked": { "type": "boolean" },
+        "unlockedAt": { "type": "string" }
+      },
+      "required": ["id", "title", "description", "icon", "unlocked"]
+    },
+    "Challenge": {
+      "title": "Challenge",
+      "description": "A timed challenge",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "target": { "type": "number" },
+        "current": { "type": "number" },
+        "rewardXp": { "type": "number" },
+        "expiresAt": { "type": "string" }
+      },
+      "required": ["id", "title", "description", "target", "current", "rewardXp", "expiresAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/subjects": {
+      "schema": "Subject",
+      "description": "User's study subjects"
+    },
+    "/users/{userId}/tasks": {
+      "schema": "Task",
+      "description": "User's to-do tasks"
+    },
+    "/users/{userId}/habits": {
+      "schema": "Habit",
+      "description": "User's habits"
+    },
+    "/users/{userId}/events": {
+      "schema": "CalendarEvent",
+      "description": "User's calendar events"
+    },
+    "/users/{userId}/badges": {
+      "schema": "Badge",
+      "description": "User's unlocked badges"
+    },
+    "/users/{userId}/challenges": {
+      "schema": "Challenge",
+      "description": "User's active challenges"
+    },
+    "/users/{userId}/data/stats": {
+      "schema": "UserData",
+      "description": "User's global stats"
+    }
+  }
+}
